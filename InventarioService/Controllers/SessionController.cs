@@ -4,9 +4,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Model_Inventario.InventarioDTO;
+using Model_Inventario.InventarioDTO.Error;
 using Repositorio_Inventario;
 
-namespace InventarioService.Controllers
+namespace ValidarEstadoDocumentosSunat.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -28,6 +29,10 @@ namespace InventarioService.Controllers
             try
             {
                 return Ok(managerService.Authenticate(UserCredential, contexto));
+            }
+            catch(ExceptionDTO ex)
+            {
+                return BadRequest(ex.error);
             }
             catch (Exception ex)
             {

@@ -68,11 +68,13 @@ namespace InventarioService.Services.Implementacion
 
             }
 
+            var ObtencionCredenciales = _CustomAuthenticationManagerRepositorioPortal.ObtenerCredencialesSuant(emrpesa.ruc,emrpesa.cadenaconexion);
+
             var ecKeyTemp = Encoding.ASCII.GetBytes(tokenKey);
 
             // Note that the ecKey should have 256 / 8 length:
             byte[] ecKey = new byte[256 / 8];
-            DateTime fechaExpiracion = DateTime.UtcNow.AddDays(30);
+            DateTime fechaExpiracion = DateTime.UtcNow.AddMinutes(30);
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(tokenKey);
@@ -89,7 +91,9 @@ namespace InventarioService.Services.Implementacion
                     new Claim("Expira", fechaExpiracion.ToString()),
                     new Claim("Rol", resultadoAutenticacion.Rol.ToString()),
                     new Claim("Correo", resultadoAutenticacion.correo.ToString()),
-                    new Claim("BD_Sql",emrpesa.cadenaconexion.ToString())
+                    new Claim("BD_Sql",emrpesa.cadenaconexion.ToString()),
+                    new Claim("Client_id",ObtencionCredenciales?.Client_id==null?"":ObtencionCredenciales.Client_id),
+                    new Claim("Client_secret",ObtencionCredenciales?.Client_secret==null?"":ObtencionCredenciales.Client_secret)
                }),
                 Expires = fechaExpiracion,
                 SigningCredentials = new SigningCredentials(

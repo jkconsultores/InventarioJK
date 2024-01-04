@@ -24,12 +24,29 @@ namespace Repositorio_Inventario.UnitOfWork
         public async Task RollbackAsync() => await _dbContext.DisposeAsync();
 
         //implementacion de repositorios
-        private EmpresaRepository _EmpresaRepository;
-        public IEmpresaRepository EmpresaRepository
+
+        private TDocumentosAValidarRepository _TDocumentosAValidarRepository;
+        public ITDocumentosAValidarRepository TDocumentosAValidarRepository
         {
             get
             {
-                return _EmpresaRepository = _EmpresaRepository ?? new EmpresaRepository(_dbContext);
+                return _TDocumentosAValidarRepository = _TDocumentosAValidarRepository ?? new TDocumentosAValidarRepository(_dbContext);
+            }
+        } 
+        private SunatDataRepository _SunatDataRepository;
+        public ISunatDataRepository SunatDataRepository
+        {
+            get
+            {
+                return _SunatDataRepository = _SunatDataRepository ?? new SunatDataRepository(_dbContext);
+            }
+        }
+        private MenuGreRepository _MenuGreRepository;
+        public IMenuGreRepository MenuGreRepository
+        {
+            get
+            {
+                return _MenuGreRepository = _MenuGreRepository ?? new MenuGreRepository(_dbContext);
             }
         }
     }

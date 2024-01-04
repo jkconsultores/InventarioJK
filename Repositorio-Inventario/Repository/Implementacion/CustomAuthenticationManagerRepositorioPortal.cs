@@ -26,7 +26,7 @@ namespace Repositorio_Inventario.Repository.Implementacion
                 Empresa registro = new Empresa();
                 _query = @"SELECT  *
                             FROM EMPRESA
-                            WHERE DESCRIPCION=@empresa AND APP='GUIAREMISION'";
+                            WHERE DESCRIPCION=@empresa ";
                 var respuesta = _dapperRepositoryPortal.FirstOrDefault(_query, new { usuarioLog.empresa });
                 if (!string.IsNullOrEmpty(respuesta) && !respuesta.Contains("[]") && respuesta != "null")
                 {
@@ -78,6 +78,35 @@ namespace Repositorio_Inventario.Repository.Implementacion
             {
                 throw new Exception(e.Message);
             }
+        }
+
+        public SunatData ObtenerCredencialesSuant(int ruc,string conexion)
+        {
+            try
+            {
+                SqlDbContext sqlconte = new SqlDbContext(conexion);
+                _dapperRepositoryPortal = new DapperRepository(sqlconte);
+
+                var _query = string.Empty;
+                SunatData registro = new SunatData();
+                _query = @"SELECT  
+                            *
+                            FROM SunatData as us
+                            WHERE us.RucEmsior = @ruc";
+                var respuesta = _dapperRepositoryPortal.FirstOrDefault(_query, new { ruc });
+
+                if (!string.IsNullOrEmpty(respuesta) && !respuesta.Contains("[]") && respuesta != "null")
+                {
+                    registro = JsonConvert.DeserializeObject<SunatData>(respuesta);
+                }
+                else
+                {
+                    registro = null;
+                }
+
+                return registro;
+            }
+            catch (Exception e) { throw new Exception(e.Message); }
         }
     }
 }

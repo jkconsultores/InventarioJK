@@ -14,6 +14,8 @@ namespace Repositorio_Inventario.UnitOfWork
         Task CommitAsync();
         Task RollbackAsync();
 
-        IEmpresaRepository EmpresaRepository { get; }
+        public ITDocumentosAValidarRepository TDocumentosAValidarRepository { get; }
+        public ISunatDataRepository SunatDataRepository { get; }
+        public IMenuGreRepository MenuGreRepository { get; }
     }
 }

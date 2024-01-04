@@ -9,18 +9,21 @@ using System.Threading.Tasks;
 
 namespace Servicios_Inventario.Service.Implementacion
 {
-    public class EmpresaService : IEmpresaService
+    public class SunatDataService : ISunatDataService
     {
         private readonly IUnitOfWork unitOfWork;
 
-        public EmpresaService(IUnitOfWork unitOfWork)
+        public SunatDataService(IUnitOfWork unitOfWork)
         {
             this.unitOfWork = unitOfWork;
         }
-        public Empresa ObtenerEmpresa()
-        { //logica 
-            var datos = unitOfWork.EmpresaRepository.AgregarEmrpesa(new Model_Inventario.InventarioDTO.EmpresaDTO());
-            return new Empresa();
+
+        public bool AddCredentials(SunatData data, string bD_Sql)
+        {
+            try
+            {
+                return  unitOfWork.SunatDataRepository.AddCredentials(data, bD_Sql);
+            }catch { return false; }
         }
     }
 }

@@ -18,7 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Model-Inventario\Model-Inventario.csproj" />
     <ProjectReference Include="..\Repositorio-Inventario\Repositorio-Inventario.csproj" />
-    <ProjectReference Include="..\Servicios-Inventario\Servicios-Inventario.csproj" />
+    <ProjectReference Include="..\Servicios-Inventario\Servicios-ValidationSunat.csproj" />
   </ItemGroup>
 
 </Project>

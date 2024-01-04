@@ -8,7 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="InventarioDTO\JoinsDTO\" />
+    <Compile Remove="SunatValidationDTO\JoinsDTO\**" />
+    <EmbeddedResource Remove="SunatValidationDTO\JoinsDTO\**" />
+    <None Remove="SunatValidationDTO\JoinsDTO\**" />
   </ItemGroup>
 
 </Project>

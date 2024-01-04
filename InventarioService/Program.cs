@@ -13,6 +13,8 @@ using Repositorio_Inventario.UnitOfWork;
 using Servicios_Inventario.Service.Interface;
 using Servicios_Inventario.Service.Implementacion;
 using Repositorio_Inventario;
+using ValidarEstadoDocumentosSunat.Services.Interface;
+using ValidarEstadoDocumentosSunat.Services.Implementacion;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,7 +33,7 @@ static bool LifetimeValidator(DateTime? notBefore, DateTime? expires, SecurityTo
 builder.Services.AddSwaggerGen(c =>
 {
     c.CustomSchemaIds(type => type.ToString());
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "JK Smart Data ALMACEN Api", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "JK Smart Data Validacion documentos sunat Api", Version = "v1" });
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
     {
@@ -107,16 +109,19 @@ builder.Services.AddSingleton<ICustomAuthenticationManagerService>(new CustomAut
 builder.Services.AddTransient<GlobalExceptionsHandlingMiddelware>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 //implemantacion de servicios
-builder.Services.AddTransient(typeof(IEmpresaService), typeof(EmpresaService));
+builder.Services.AddTransient(typeof(ISunatService), typeof(SunatService));
+builder.Services.AddTransient(typeof(IUsuarioService), typeof(UsuarioService));
+builder.Services.AddTransient(typeof(ISunatDataService), typeof(SunatDataService));
+builder.Services.AddTransient(typeof(IMenuGreService), typeof(MenuGreService));
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
 
 app.UseHttpsRedirection();
 
